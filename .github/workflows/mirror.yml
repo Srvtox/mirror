@@ -1,0 +1,36 @@
+name: Rust Mirror Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * *"
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install curl
+        run: sudo apt-get update && sudo apt-get install -y curl
+
+      - name: Download Rust
+        run: |
+          chmod +x scripts/download.sh
+          scripts/download.sh
+
+      - name: Create tag
+        id: tag
+        run: echo "tag=rust-$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: Rust Mirror ${{ steps.tag.outputs.tag }}
+          files: |
+            dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
