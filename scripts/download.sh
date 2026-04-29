@@ -10,7 +10,7 @@ cd dist
 echo "Downloading metadata..."
 curl -L -O $BASE/channel-rust-stable.toml
 
-VERSION=1.95.0
+VERSION="1.95.0"
 
 echo "Rust version: $VERSION"
 echo $VERSION > VERSION
