@@ -8,18 +8,22 @@ mkdir -p dist
 cd dist
 
 echo "Downloading metadata..."
-curl -L -O $BASE/channel-rust-stable.toml
+curl -L -O "$BASE/channel-rust-stable.toml"
 
-VERSION=$(grep -A1 '\[pkg.rust\]' channel-rust-stable.toml | grep version | cut -d '"' -f2 | cut -d ' ' -f1)
+# Extract correct version of Rust bundle from metadata
+VERSION=$(grep -A1 '\[pkg.rust\]' channel-rust-stable.toml \
+    | grep '^version' \
+    | cut -d '"' -f2 \
+    | cut -d ' ' -f1)
 
-echo "Rust version: $VERSION"
-echo $VERSION > VERSION
+echo "Rust version detected: $VERSION"
+echo "$VERSION" > VERSION
 
-echo "Downloading toolchain..."
+echo "Downloading Rust bundle (installer)..."
 
-curl -L -O $BASE/rustc-$VERSION-$TARGET.tar.xz
-curl -L -O $BASE/cargo-$VERSION-$TARGET.tar.xz
-curl -L -O $BASE/rust-std-$VERSION-$TARGET.tar.xz
+# Download installer bundle (this contains rustc + cargo + std + install.sh)
+BUNDLE="rust-$VERSION-$TARGET.tar.xz"
+curl -L -O "$BASE/$BUNDLE"
 
 echo "Downloaded files:"
 ls -lh
