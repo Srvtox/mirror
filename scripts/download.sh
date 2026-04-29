@@ -7,11 +7,10 @@ TARGET="x86_64-unknown-linux-gnu"
 mkdir -p dist
 cd dist
 
-echo "Downloading channel metadata..."
-
+echo "Downloading metadata..."
 curl -L -O $BASE/channel-rust-stable.toml
 
-VERSION=$(grep -m1 'version = ' channel-rust-stable.toml | cut -d '"' -f2)
+VERSION=$(grep -m1 '^version = ' channel-rust-stable.toml | cut -d '"' -f2)
 
 echo "Rust version: $VERSION"
 echo $VERSION > VERSION
@@ -22,5 +21,5 @@ curl -L -O $BASE/rustc-$VERSION-$TARGET.tar.xz
 curl -L -O $BASE/cargo-$VERSION-$TARGET.tar.xz
 curl -L -O $BASE/rust-std-$VERSION-$TARGET.tar.xz
 
-echo "Files downloaded:"
+echo "Downloaded files:"
 ls -lh
