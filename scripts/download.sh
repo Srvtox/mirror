@@ -24,6 +24,7 @@ echo "Downloading Rust bundle (installer)..."
 # Download installer bundle (this contains rustc + cargo + std + install.sh)
 BUNDLE="rust-$VERSION-$TARGET.tar.xz"
 curl -L -O "$BASE/$BUNDLE"
+curl -L -O https://static.rust-lang.org/dist/rust-src-$VERSION.tar.xz
 
 echo "Downloaded files:"
 ls -lh
