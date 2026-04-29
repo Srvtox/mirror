@@ -10,7 +10,7 @@ cd dist
 echo "Downloading metadata..."
 curl -L -O $BASE/channel-rust-stable.toml
 
-VERSION=$(grep -A1 '\[pkg.rust\]' channel-rust-stable.toml | grep version | cut -d '"' -f2 | cut -d ' ' -f1)
+VERSION=1.95.0
 
 echo "Rust version: $VERSION"
 echo $VERSION > VERSION
